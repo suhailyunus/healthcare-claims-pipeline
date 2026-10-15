@@ -1,0 +1,16 @@
+[project]
+name = "claims-pipeline"
+version = "0.1.0"
+description = "Healthcare claims pipeline on Databricks with LLM denial-letter extraction and evaluation"
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

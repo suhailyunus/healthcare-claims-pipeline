@@ -1,0 +1,2 @@
+# Local development and tests. On Databricks, pyspark and delta are provided by the runtime.
+pytest>=8.0

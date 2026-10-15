@@ -1,0 +1,18 @@
+# Data never goes in the repo
+data/
+*.csv
+*.parquet
+*.zip
+# Real documents used for local sanity checks only -- never commit
+real_letters/
+# Generated letters are reproducible from code + seed
+generated_letters/
+# Secrets
+.env
+.databrickscfg
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+*.egg-info/
