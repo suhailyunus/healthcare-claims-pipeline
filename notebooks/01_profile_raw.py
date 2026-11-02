@@ -67,7 +67,7 @@ display(profile(raw["inpatient"]))
 
 # COMMAND ----------
 
-claim_key = "CLM_ID"  # CONFIRM from the column list above
+claim_key = "CLM_ID"  # confirmed: present in all three claims files
 
 for name in ("inpatient", "outpatient", "carrier"):
     df = raw[name]

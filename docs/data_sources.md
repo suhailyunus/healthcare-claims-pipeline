@@ -8,7 +8,7 @@ Event Data Public Use File. Published on data.cms.gov with a user guide (May 202
 Use this release, not the older 2008-2010 DE-SynPUF. The older files use ICD-9 diagnosis
 codes, which US healthcare stopped using in 2015.
 
-Start with four file types:
+Downloaded from the collection's per-file links. Start with four file types:
 
 | File | What it holds |
 |---|---|
@@ -20,15 +20,17 @@ Start with four file types:
 Add the others (skilled nursing, home health, hospice, equipment, drug events) only if a
 later phase needs them.
 
-### Before writing silver logic, confirm from the user guide and `01_profile_raw`
+### Confirmed from the raw profile (Oct 2026)
 
-- [ ] Delimiter (set `DELIMITER` in `config.py`)
-- [ ] Exact file names (set `SOURCE_FILES` in `config.py`)
-- [ ] Date format in the date columns
-- [ ] Grain of each claims file: one row per claim, or one row per claim line
-- [ ] Which column is the member key and which is the claim key
+- [x] Delimiter: pipe `|`
+- [x] File names: `beneficiary_2015.csv` to `beneficiary_2025.csv`, `inpatient.csv`,
+      `outpatient.csv`, `carrier.csv`
+- [x] Date format: `dd-MMM-yyyy`, e.g. `25-Mar-2015`
+- [x] Grain: all three claims files are line-grain; beneficiary is one row per member-year
+- [x] Keys: `BENE_ID` (member), `CLM_ID` (claim)
 
-Nothing in the bronze layer depends on these answers. Everything in silver does.
+The release on data.cms.gov now covers 2015 to 2025, two years beyond the user guide.
+Row counts and grain are recorded in `docs/definitions.md`.
 
 ## Denial codes: CARC and RARC
 

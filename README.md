@@ -4,7 +4,8 @@ A medallion-architecture pipeline on Databricks over CMS synthetic Medicare clai
 LLM step that extracts structured fields from denial letters and an evaluation report that
 measures how often that step is right.
 
-**Status:** Week 1 of 6 (foundations). See the roadmap below.
+**Status:** Week 2 of 6. Bronze loaded (1.84M rows across 4 tables); silver validation
+and defect testing built. See the roadmap below.
 
 ## Why this project
 
@@ -46,7 +47,7 @@ CMS synthetic claims (CSV)
 - `docs/` definitions, data sources, weekly checklists
 - `notebooks/` Databricks notebooks (source format), numbered in run order
 - `src/claims_pipeline/` importable pipeline code
-- `tests/` unit tests for logic that runs without Spark
+- `tests/` unit tests; `test_silver.py` runs the validation rules on a local Spark session
 
 ## Running it
 
@@ -55,7 +56,8 @@ CMS synthetic claims (CSV)
 3. Upload the CMS files to the landing volume (see `docs/data_sources.md`).
 4. Run the remaining notebooks in number order.
 
-Local tests: `pip install -r requirements.txt && pytest`
+Local tests: `pip install -r requirements.txt && pytest`. The Spark tests run when
+`pyspark` is installed and are skipped otherwise.
 
 ## Limitations (kept current as the project grows)
 
