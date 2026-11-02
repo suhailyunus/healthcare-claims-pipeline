@@ -4,10 +4,10 @@ Goal: every bronze row accounted for, in silver or in quarantine with a reason, 
 that the rules catch the defects they claim to.
 
 ## Build
-- [ ] Pull the latest code into the Databricks Git folder
-- [ ] Run `notebooks/03_silver` and read the quality log it prints
-- [ ] Run `notebooks/04_defect_check` and confirm recall is 1.0 for every defect type
-- [ ] Record the real quarantine counts and anything surprising in `docs/definitions.md`
+- [x] Pull the latest code into the Databricks Git folder
+- [x] Run `notebooks/03_silver` and read the quality log it prints
+- [x] Run `notebooks/04_defect_check` and confirm recall is 1.0 for every defect type
+- [x] Record the real quarantine counts and anything surprising in `docs/definitions.md`
 
 ## Understand (be able to explain without notes)
 - [ ] Why the duplicate check hashes whole rows instead of checking `CLM_ID`
@@ -16,7 +16,7 @@ that the rules catch the defects they claim to.
 - [ ] What "bronze = silver + quarantine" protects against
 
 ## Domain
-- [ ] Answer: does `CLM_PMT_AMT` repeat on every line of a claim?
+- [x] Answer: does `CLM_PMT_AMT` repeat on every line of a claim?
 - [ ] Read about claim types: institutional (inpatient, outpatient) vs professional (carrier)
 - [ ] Learn the difference between billed, allowed, and paid amounts
 

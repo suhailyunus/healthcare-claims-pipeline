@@ -12,7 +12,7 @@ verify when building gold tables), or OPEN.
 | Claim | One bill from one provider for one member covering a date range | Distinct `CLM_ID`, never row count | CONFIRMED |
 | Claim line | One service or revenue-center item within a claim | One row in a claims file | CONFIRMED |
 | Service dates | When care happened, not when the claim was processed | `CLM_FROM_DT`, `CLM_THRU_DT` | CONFIRMED |
-| Paid amount | What Medicare paid the provider for the claim | `CLM_PMT_AMT`, a claim-level field | CHECK IN GOLD |
+| Paid amount | What Medicare paid the provider for the claim | `CLM_PMT_AMT`, repeated on every line: take it once per claim, never sum lines | CONFIRMED |
 | Billed / allowed amount | What the provider asked for / what the payer deemed payable | Carrier: `NCH_CARR_CLM_SBMTD_CHRG_AMT`, `NCH_CARR_CLM_ALOWD_AMT` | CHECK IN GOLD |
 | Denied claim | A claim or line the payer declined to pay | Not present in this data; assigned by the letter generator | CONFIRMED (absent) |
 | Inpatient stay | A hospital admission | One inpatient claim; interim bills could split a stay | CHECK IN GOLD |
@@ -36,13 +36,22 @@ guide describes an earlier version of the release, but the figures are clearly l
 ## Ways these numbers get counted wrong
 
 1. **Counting rows as claims.** All three claims files are line-grain (table above).
-2. **Summing claim-level amounts across lines.** If `CLM_PMT_AMT` repeats on every line of
-   a claim, a plain sum multiplies it by the number of lines. Check before building gold.
+2. **Summing claim-level amounts across lines.** Confirmed: `CLM_PMT_AMT` repeats on every
+   line of every multi-line claim (inpatient 8,982 of 8,982; outpatient 41,450 of 41,450;
+   carrier 89,520 of 89,520). A plain sum multiplies each payment by its line count, which
+   for carrier (about 12 lines per claim) overstates spending roughly twelvefold.
 3. **Mixing billed and paid.** A cost metric must say which amount it uses.
 4. **Counting members without enrollment.** Per-member rates need member months as the
    denominator, not a count of people who happened to have claims.
 5. **Casting IDs to numbers.** IDs are long negative numbers here (for example
    `-10000010254618`). Codes elsewhere carry leading zeros. All IDs and codes stay strings.
+
+## Silver results (Nov 2026)
+
+- All 1,841,079 bronze rows passed the silver rules; nothing was quarantined.
+- With about 1% of inpatient rows broken on purpose in seven ways, every rule caught 100%
+  of its defect type and no clean row was quarantined. The defects were written to match
+  the rules, so this shows the rules work as built, not that they catch unforeseen problems.
 
 ## Data facts that shape the pipeline
 
@@ -56,5 +65,4 @@ guide describes an earlier version of the release, but the figures are clearly l
 
 ## Open questions
 
-- Does `CLM_PMT_AMT` repeat on every line of a claim, or appear once? (Decides trap 2.)
 - Are adjusted or replacement claims present? The guide suggests not; confirm in gold.
